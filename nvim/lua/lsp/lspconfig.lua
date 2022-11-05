@@ -111,17 +111,31 @@ end
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches.
 -- Add your language server below:
-local servers = { 'bashls', 'pyright', 'clangd', 'html', 'cssls', 'tsserver' }
+local servers = { 'bashls', 'pyright', 'html', 'clangd', 'cmake', 'cssls', 'tsserver' }
 
 -- Call setup
 for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-    on_attach = on_attach,
-    root_dir = root_dir,
-    capabilities = capabilities,
-    flags = {
-      -- default in neovim 0.7+
-      debounce_text_changes = 150,
+  if lsp == 'clangd' then
+    lspconfig[lsp].setup {
+      on_attach = on_attach,
+      root_dir = root_dir,
+      cmd = {'clangd', '--clang-tidy'},
+      capabilities = capabilities,
+      flags = {
+        -- default in neovim 0.7+
+        debounce_text_changes = 150,
+      }
     }
-  }
+  else
+    lspconfig[lsp].setup {
+      on_attach = on_attach,
+      root_dir = root_dir,
+      capabilities = capabilities,
+      flags = {
+        -- default in neovim 0.7+
+        debounce_text_changes = 150,
+      }
+    }
+  end
 end
+

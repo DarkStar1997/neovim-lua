@@ -18,10 +18,10 @@ vim.g.mapleader = ','
 -----------------------------------------------------------
 
 -- Disable arrow keys
-map('', '<up>', '<nop>')
-map('', '<down>', '<nop>')
-map('', '<left>', '<nop>')
-map('', '<right>', '<nop>')
+-- map('', '<up>', '<nop>')
+-- map('', '<down>', '<nop>')
+-- map('', '<left>', '<nop>')
+-- map('', '<right>', '<nop>')
 
 -- Map Esc to kk
 map('i', 'kk', '<Esc>')
@@ -56,6 +56,8 @@ map('n', '<leader>q', ':qa!<CR>')
 -- Applications and Plugins shortcuts
 -----------------------------------------------------------
 
+map('n', '<C-t><left>', ':bp<CR>')
+map('n', '<C-t><right>', ':bn<CR>')
 -- Terminal mappings
 map('n', '<C-t>', ':Term<CR>', { noremap = true })  -- open
 map('t', '<Esc>', '<C-\\><C-n>')                    -- exit
@@ -67,3 +69,6 @@ map('n', '<leader>n', ':NvimTreeFindFile<CR>')      -- search file
 
 -- Tagbar
 map('n', '<leader>z', ':TagbarToggle<CR>')          -- open/close
+
+-- apply macro over visual range
+vim.keymap.set('x', '@', '":norm @" . getcharstr() . "<cr>"', { expr = true })
